@@ -58,6 +58,10 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Develop and package</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#package-to-a-custom-path">Package to a custom path</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#release-on-github">Release on GitHub</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../documentation/">Maintain documentation</a>
@@ -106,7 +110,7 @@
               
                 <h1 id="develop-and-package-the-extension">Develop and package the extension</h1>
 <pre><code class="language-sh">npm ci
-npm test
+npm run check
 npx playwright install chromium
 npm run test:ui
 npm run package
@@ -115,13 +119,25 @@ npm run package
 Open <code>examples/starter.salad.yml</code> in the host. JavaScript is used directly; there
 is no build-time transpiler. <code>npm ci --omit=dev</code> is sufficient for core tests and
 packaging. Python 3 is used only by the deterministic VSIX packaging script,
-not by the installed extension. Dependencies and their MIT licenses are bundled.
+not by the installed extension. The runtime dependency and its license are bundled.
 Install dependencies before running the core tests or packaging a source checkout.</p>
 <p><code>npm run package</code> produces <code>dist/schema-salad-studio-0.1.0.vsix</code>, a ZIP-based
 VSIX with manifest, content types, source, UI assets, example, and runtime
 parser. No Marketplace publishing is performed. To publish, choose your own
 registered publisher identity and package with the official <code>@vscode/vsce</code>.</p>
 <p>See <a href="../../reference/verification/">verification coverage</a> for what the automated checks exercise.</p>
+<h2 id="package-to-a-custom-path">Package to a custom path</h2>
+<pre><code class="language-sh">npm run package -- --out dist/custom-name.vsix
+</code></pre>
+<p>The extension runs directly from JavaScript; no TypeScript compilation is needed. <code>npm run check</code> checks JavaScript syntax and runs the core and host tests. Browser tests run separately with <code>npm run test:ui</code>. Python 3 is still required for the VSIX packaging helper.</p>
+<h2 id="release-on-github">Release on GitHub</h2>
+<ol>
+<li>Set <code>package.json</code> and <code>package-lock.json</code> to the release version and update the changelog.</li>
+<li>Commit the release changes and complete an installation smoke test in a real VS Code host.</li>
+<li>Create and push a matching stable tag, such as <code>v0.1.0</code> for version <code>0.1.0</code>.</li>
+</ol>
+<p>The release workflow verifies the tag, installs locked dependencies with <code>npm ci</code>, runs syntax, core, host, and Chromium UI checks, and packages the extension. It creates a GitHub Release with generated notes and attaches <code>schema-salad-studio-0.1.0.vsix</code> for that version. Rerunning the workflow replaces the asset on the existing release.</p>
+<p>CI runs the same checks and packaging on branches and pull requests, uploading the VSIX as an <a href="https://github.com/actions/upload-artifact">Actions artifact</a>. GitHub release uploads use the built-in <code>GITHUB_TOKEN</code>; Azure credentials and a Marketplace environment are not required. Marketplace publishing is a separate process.</p>
               
             </div>
           </div><footer>
