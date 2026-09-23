@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://eoap.github.io/schema-salad-studio/how-to/edit-schema/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Edit a schema - Schema Salad Studio</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Edit a schema";
+        var mkdocs_page_input_path = "how-to/edit-schema.md";
+        var mkdocs_page_url = "/schema-salad-studio/how-to/edit-schema/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Schema Salad Studio
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-schema/">Create your first schema</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../install-and-open/">Install and open</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Edit a schema</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../set-defaults/">Set field defaults</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../develop/">Develop and package</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../documentation/">Maintain documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/field-controls/">Field controls and defaults</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/schema-support/">Schema support and limitations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/verification/">Verification coverage</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/editor-model/">The editor and YAML</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/serialization/">Dependency-ordered serialization</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Schema Salad Studio</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">How-to guides</li>
+      <li class="breadcrumb-item active">Edit a schema</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/eoap/schema-salad-studio/edit/main/docs/how-to/edit-schema.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="edit-a-schema-on-the-canvas">Edit a schema on the canvas</h1>
+<p>There is no right-hand properties panel. Everyday editing happens directly on
+cards, with a context menu for creation and less common operations.</p>
+<ul>
+<li><strong>Add a type:</strong> right-click the canvas, then <strong>Add → Enum / Record / Mapping /
+  Union / Documentation</strong>. The new card appears at the clicked canvas position.
+  Mapping is serialized as Schema Salad <code>type: map</code>. Shift+F10 opens the same
+  menu from the focused canvas; arrow keys navigate it.</li>
+<li><strong>Rename inline:</strong> click a type name or field name and edit it directly. Enter
+  or clicking away commits the change; Escape cancels. No Apply button is needed.
+  Known local type references update when a named type is renamed.</li>
+<li><strong>Enum values:</strong> use the list inside the enum card. Type a new value and press
+  Enter or click +. Edit existing values inline; × removes a value. Values are
+  literal strings, so <code>null</code> and <code>true</code> do not need YAML quoting. Empty values
+  and duplicates are rejected. New enums start with an empty list.</li>
+<li><strong>Add a field:</strong> click <strong>+ Add field</strong> on a record, or right-click the record
+  and choose <strong>Add field</strong>. The new field name is focused for immediate editing.
+  A new field initially has <code>string</code> type; set its intended type by wiring it
+  or editing the adjacent type control.</li>
+<li><strong>Wire a field:</strong> drag its circular port to an existing type card. A live
+  line follows the pointer and the target is highlighted. Releasing assigns the
+  target's name as the field type and creates its reference arrow. Escape or
+  releasing on empty canvas cancels. A port click followed by a target-card
+  click is also supported. Wiring changes the base type (or the array item type),
+  preserving the Array and Nullable checkboxes.</li>
+<li><strong>Type a reference:</strong> type an existing type name next to a field; Enter or
+  blur saves it and automatically draws its arrow. Changing the type to a
+  primitive removes that reference arrow while preserving the checkboxes. Suggestions include primitive and
+  local named types. <code>Asset[]</code>, <code>Asset?</code>, and <code>Asset | OtherType</code> are supported;
+  pipe-separated alternatives serialize as a Schema Salad union list.</li>
+<li><strong>Mapping and union types:</strong> their values/alternatives are editable on their
+  cards. Structured inline types remain available through Properties → type
+  or Advanced node YAML / JSON.</li>
+<li><strong>Move cards:</strong> drag the header background or type-kind label. Name text
+  remains selectable and editable. Zoom and Arrange are available above the
+  canvas. Layout does not modify the schema.</li>
+<li><strong>Other properties:</strong> right-click a card or field and choose <strong>Properties…</strong>,
+  or use a card's ⋯ menu. This opens a dialog for documentation, inheritance,
+  JSON-LD annotations, defaults, flags, and advanced node YAML. Default values
+  use a type-aware form and its Save default button; other changed properties
+  commit on blur and close the dialog. Document metadata is available
+  from the explorer or canvas context menu.</li>
+<li><strong>Delete:</strong> right-click a card or field and choose Delete, then confirm.
+  Locally referenced types are protected. Undo restores deletions. To disconnect,
+  change the field's type or delete the field.</li>
+<li><strong>YAML ↗ / Save / Undo / Redo:</strong> use the normal VS Code text document. Source
+  changes refresh the diagram and stale visual edits are rejected. Changes
+  mark the document dirty; normal Save persists it to disk.</li>
+</ul>
+<p>Plain names and enum values never require YAML. Less common structured
+properties in the dialog use YAML value controls. Ordinary edits preserve
+unrelated comments and extension properties; Advanced node replacement replaces
+comments inside that node. Single definitions, list roots, and <code>$graph</code> roots
+remain supported, including map-style record fields.</p>
+<p>See <a href="../../reference/schema-support/">rename coverage and supported schema features</a> before renaming types shared across files.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../install-and-open/" class="btn btn-neutral float-left" title="Install and open"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../set-defaults/" class="btn btn-neutral float-right" title="Set field defaults">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/eoap/schema-salad-studio" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../install-and-open/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../set-defaults/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

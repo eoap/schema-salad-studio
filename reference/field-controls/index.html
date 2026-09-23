@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://eoap.github.io/schema-salad-studio/reference/field-controls/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Field controls and defaults - Schema Salad Studio</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Field controls and defaults";
+        var mkdocs_page_input_path = "reference/field-controls.md";
+        var mkdocs_page_url = "/schema-salad-studio/reference/field-controls/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Schema Salad Studio
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-schema/">Create your first schema</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/install-and-open/">Install and open</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/edit-schema/">Edit a schema</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/set-defaults/">Set field defaults</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/develop/">Develop and package</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/documentation/">Maintain documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Field controls and defaults</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#default-value-controls">Default-value controls</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../schema-support/">Schema support and limitations</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../verification/">Verification coverage</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/editor-model/">The editor and YAML</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/serialization/">Dependency-ordered serialization</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Schema Salad Studio</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Field controls and defaults</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/eoap/schema-salad-studio/edit/main/docs/reference/field-controls.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="field-types-and-default-values">Field types and default values</h1>
+<p>Each record field has <strong>Array</strong> and <strong>Nullable</strong> checkboxes. Both are false
+for new fields. Existing documents initialize the controls from their types,
+including shorthand such as <code>Asset[]?</code> and expanded nullable union/array forms.
+The inline type input displays the base type; use the checkboxes to add/remove
+wrappers. A named type entered or wired to the field preserves the flags.
+Advanced shorthand typed explicitly in the input still works.</p>
+<p>Nullable applies to the field value (the array itself if Array is checked),
+not to every element. Existing nullable array-item types are retained when
+changing the outer Nullable flag. Multi-type unions and inline definitions are
+preserved when wrapping/unwrapping them. For nested inline record fields,
+the same checkboxes are available through their Properties dialog.</p>
+<h2 id="default-value-controls">Default-value controls</h2>
+<p>Right-click a field → <strong>Properties… → Default value</strong>. Choose <strong>No default</strong>,
+<strong>Set a value</strong>, or <strong>Null</strong> when permitted. Then edit using:</p>
+<table>
+<thead>
+<tr>
+<th>Field type</th>
+<th>Default-value control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>Plain text, including empty strings; no YAML quoting</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>Checkbox</td>
+</tr>
+<tr>
+<td>Integer / number</td>
+<td>Numeric input with whole-number/range checks</td>
+</tr>
+<tr>
+<td>Local enum</td>
+<td>Dropdown of symbols, including inherited symbols</td>
+</tr>
+<tr>
+<td>Array</td>
+<td>Add/remove list items, each using its own type's control</td>
+</tr>
+<tr>
+<td>Local record</td>
+<td>Include controls and typed inputs for its fields</td>
+</tr>
+<tr>
+<td>Mapping</td>
+<td>Key/value rows with add/remove controls</td>
+</tr>
+<tr>
+<td>Union</td>
+<td>Choice of branch and a matching value editor</td>
+</tr>
+<tr>
+<td>Any / unresolved external type</td>
+<td>Choice of text, number, boolean, list, or object</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Save default</strong> commits one typed value. No default, null, empty text, false,
+zero, and an empty list remain distinct. The host validates defaults against
+supported local types before accepting them. Incompatible defaults after a type
+change are preserved and reported in local checks rather than silently coerced.</p>
+<p>The form supports finite nested values, including records/maps and inherited
+local fields. Very deeply nested values can still use Advanced node editing.
+Numeric integer inputs are restricted to JavaScript's safe integer range;
+<code>int</code> also respects its signed 32-bit bounds. Imported types are not resolved,
+so their generic form cannot enforce the external schema. Full Schema Salad
+validation, including specialization semantics, remains separate.</p>
+<p>For a worked procedure, see <a href="../../how-to/set-defaults/">set a field default</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../how-to/documentation/" class="btn btn-neutral float-left" title="Maintain documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../schema-support/" class="btn btn-neutral float-right" title="Schema support and limitations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/eoap/schema-salad-studio" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../how-to/documentation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../schema-support/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
