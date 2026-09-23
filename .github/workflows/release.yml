@@ -1,0 +1,98 @@
+# Copyright 2026 Terradue
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Release VS Code extension
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: Package and publish extension
+    runs-on: ubuntu-latest
+    environment: vscode-marketplace
+    timeout-minutes: 15
+
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      MARKETPLACE_PUBLISHER: ${{ vars.VSCE_PUBLISHER }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Validate release tag
+        shell: bash
+        run: |
+          if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $GITHUB_REF_NAME (expected vY.Y.Z)" >&2
+            exit 1
+          fi
+
+          package_version="$(node -p "require('./package.json').version")"
+          if [[ "$GITHUB_REF_NAME" != "v$package_version" ]]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $package_version" >&2
+            exit 1
+          fi
+
+          if [[ -z "$MARKETPLACE_PUBLISHER" ]]; then
+            echo "The VSCE_PUBLISHER variable is not configured in the vscode-marketplace environment" >&2
+            exit 1
+          fi
+
+          if [[ "$MARKETPLACE_PUBLISHER" == "local" ]]; then
+            echo "VSCE_PUBLISHER must be the real Visual Studio Marketplace publisher ID" >&2
+            exit 1
+          fi
+
+          if [[ -z "$AZURE_CLIENT_ID" || -z "$AZURE_TENANT_ID" ]]; then
+            echo "AZURE_CLIENT_ID and AZURE_TENANT_ID must be configured in the vscode-marketplace environment" >&2
+            exit 1
+          fi
+
+          npm pkg set "publisher=$MARKETPLACE_PUBLISHER"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Package extension
+        run: npm run package -- --out "${{ github.event.repository.name }}-${GITHUB_REF_NAME}.vsix"
+
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          vsix_file="${{ github.event.repository.name }}-${GITHUB_REF_NAME}.vsix"
+
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$vsix_file" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$vsix_file" \
+              --verify-tag \
+              --generate-notes \
+              --title "$GITHUB_REF_NAME"
+          fi

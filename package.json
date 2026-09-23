@@ -1,0 +1,76 @@
+{
+  "name": "schema-salad-studio",
+  "displayName": "Schema Salad Studio",
+  "description": "Canvas-first Schema Salad editor with inline names, enum lists, and mouse-drawn type connections.",
+  "version": "0.1.0",
+  "publisher": "schema-salad-studio",
+  "license": "Apache-2.0",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization"
+  ],
+  "keywords": [
+    "Schema Salad",
+    "CWL",
+    "YAML",
+    "schema",
+    "visual editor"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onCustomEditor:schemaSalad.studio"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "schemaSalad.open",
+        "title": "Schema Salad: Open Visual Editor"
+      },
+      {
+        "command": "schemaSalad.new",
+        "title": "Schema Salad: New Schema"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "schemaSalad.studio",
+        "displayName": "Schema Salad Studio",
+        "selector": [
+          {
+            "filenamePattern": "*.yml"
+          },
+          {
+            "filenamePattern": "*.yaml"
+          },
+          {
+            "filenamePattern": "*.salad"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "schemaSalad.open",
+          "when": "resourceExtname == .yml || resourceExtname == .yaml || resourceExtname == .salad",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "python3 scripts/package.py",
+    "test:ui": "node test/ui.cjs"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  }
+}

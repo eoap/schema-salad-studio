@@ -1,0 +1,28 @@
+site_name: Schema Salad Studio
+site_description: Documentation for the first public release, 0.1.0, of Schema Salad Studio.
+site_url: https://eoap.github.io/schema-salad-studio/
+repo_url: https://github.com/eoap/schema-salad-studio
+edit_uri: edit/main/docs/
+theme:
+  name: readthedocs
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Create your first schema: tutorials/first-schema.md
+  - How-to guides:
+      - Install and open: how-to/install-and-open.md
+      - Edit a schema: how-to/edit-schema.md
+      - Set field defaults: how-to/set-defaults.md
+      - Develop and package: how-to/develop.md
+      - Maintain documentation: how-to/documentation.md
+  - Reference:
+      - Field controls and defaults: reference/field-controls.md
+      - Schema support and limitations: reference/schema-support.md
+      - Verification coverage: reference/verification.md
+  - Explanation:
+      - The editor and YAML: explanation/editor-model.md
+      - Dependency-ordered serialization: explanation/serialization.md
+validation:
+  links:
+    not_found: warn
+    anchors: warn

@@ -1,0 +1,42 @@
+# Schema Salad Studio example — edit visually or in YAML.
+$base: https://example.org/catalog#
+$namespaces:
+  ex: https://example.org/catalog#
+$graph:
+  - name: Asset
+    type: record
+    doc: A reusable asset with a location and format.
+    fields:
+      - name: href
+        type: string
+        jsonldPredicate:
+          _type: '@id'
+          noLinkCheck: true
+      - name: mediaType
+        type: string?
+  - name: ProductKind
+    type: enum
+    doc: The kind of Earth observation product.
+    symbols: [optical, radar, elevation]
+  - name: CatalogItem
+    type: record
+    documentRoot: true
+    doc: An item and its associated assets.
+    fields:
+      - name: id
+        type: string
+        jsonldPredicate: '@id'
+      - name: kind
+        type: ProductKind
+      - name: assets
+        type:
+          type: array
+          items: Asset
+      - name: description
+        type: string?
+  - name: AssetIndex
+    type: map
+    values: Asset
+  - name: ProductOrAsset
+    type: union
+    names: [CatalogItem, Asset]
