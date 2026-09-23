@@ -21,7 +21,7 @@ try{
  assert.equal(await page.locator('.inspector').count(),0);assert.equal(await page.getByRole('button',{name:'Apply',exact:true}).count(),0);assert.equal(await page.locator('.card').count(),5);assert.equal(await page.locator('.edge').count(),5);
  await page.locator('.viewport').click({button:'right',position:{x:420,y:760}});await page.getByRole('menuitem',{name:'Add  ›',exact:true}).click();
  for(const name of ['Enum','Record','Mapping','Union','Documentation'])assert.equal(await page.getByRole('menuitem',{name,exact:true}).count(),1);
- await page.screenshot({path:'../schema-salad-studio-preview.png',fullPage:true});
+ await page.screenshot({path:'test-results/schema-salad-studio-preview.png',fullPage:true});
  let old=version;await page.getByRole('menuitem',{name:'Enum',exact:true}).click();await waitEdit(old);assert.equal(await page.locator('.card').count(),6);
  await change('Type name NewEnum','Quality');
  old=version;await page.getByRole('textbox',{name:'New enum value for Quality',exact:true}).fill('good');await page.getByRole('textbox',{name:'New enum value for Quality',exact:true}).press('Enter');await waitEdit(old);
@@ -66,7 +66,7 @@ try{
  const properties=async(type,name)=>{const row=card(type).locator('[data-field]').filter({has:page.getByRole('textbox',{name:'Field name '+name,exact:true})});await row.click({button:'right',position:{x:2,y:2}});await page.getByRole('menuitem',{name:'Properties…',exact:true}).click();await page.getByRole('dialog').waitFor();};
  const saveDefault=async()=>{const v=version;await page.getByRole('button',{name:'Save default',exact:true}).click();await waitEdit(v);await page.getByRole('dialog').waitFor({state:'hidden'});};
  await properties('CatalogItem','orderedField');await page.getByLabel('Default mode',{exact:true}).selectOption('value');await page.getByRole('button',{name:'+ Add item',exact:true}).click();await page.getByLabel('Default item',{exact:true}).selectOption('radar');
- await page.locator('.toast').evaluateAll(es=>es.forEach(e=>e.remove()));await page.screenshot({path:'../schema-salad-studio-defaults-preview.png',fullPage:true});
+ await page.locator('.toast').evaluateAll(es=>es.forEach(e=>e.remove()));await page.screenshot({path:'test-results/schema-salad-studio-defaults-preview.png',fullPage:true});
  await saveDefault();assert.deepEqual(valueField().default,['radar']);
  await properties('CatalogItem','orderedField');await page.getByLabel('Default mode',{exact:true}).selectOption('null');await saveDefault();assert.equal(valueField().default,null);
  await properties('CatalogItem','orderedField');await page.getByLabel('Default mode',{exact:true}).selectOption('none');await saveDefault();assert.equal(Object.hasOwn(valueField(),'default'),false);

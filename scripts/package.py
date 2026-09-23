@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Build an installable VSIX without downloading a packaging CLI."""
+import argparse
 import json
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -7,8 +8,11 @@ from xml.sax.saxutils import escape
 
 root = Path(__file__).resolve().parents[1]
 pkg = json.loads((root / 'package.json').read_text())
-dest = root / 'dist' / f"{pkg['name']}-{pkg['version']}.vsix"
-dest.parent.mkdir(exist_ok=True)
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--out', type=Path, help='Output VSIX path (relative to the current directory)')
+args = parser.parse_args()
+dest = args.out or root / 'dist' / f"{pkg['name']}-{pkg['version']}.vsix"
+dest.parent.mkdir(parents=True, exist_ok=True)
 manifest = f'''<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
 <Metadata><Identity Language="en-US" Id="{pkg['name']}" Version="{pkg['version']}" Publisher="{pkg['publisher']}"/>

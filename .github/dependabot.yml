@@ -15,7 +15,7 @@
 version: 2
 
 updates:
-  # TypeScript, ESLint, VS Code API types, and the VSIX packaging tool.
+  # JavaScript runtime and browser-test dependencies.
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -34,13 +34,6 @@ updates:
         update-types:
           - minor
           - patch
-    ignore:
-      # typescript-eslint currently supports TypeScript versions below 6.1.
-      # Keep TypeScript on the latest compatible 6.0.x release until that peer
-      # dependency range is widened upstream.
-      - dependency-name: typescript
-        update-types:
-          - version-update:semver-major
     commit-message:
       prefix: build(deps)
 
@@ -64,7 +57,7 @@ updates:
     commit-message:
       prefix: ci(deps)
 
-  # MkDocs and Material theme versions in requirements-docs.txt.
+  # MkDocs versions in requirements-docs.txt.
   - package-ecosystem: pip
     directory: /
     schedule:

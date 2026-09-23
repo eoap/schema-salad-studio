@@ -16,8 +16,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - "**"
+    branches: ["**"]
   pull_request:
   workflow_dispatch:
 
@@ -30,21 +29,26 @@ concurrency:
 
 jobs:
   check:
-    name: Compile, lint, and test
+    name: Check JavaScript, test, and package
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
+    timeout-minutes: 15
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 22
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run checks
-        run: npm run check
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run check
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:ui
+      - run: npm run package
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v7
+        with:
+          name: schema-salad-studio-vsix
+          path: dist/*.vsix
+          if-no-files-found: error

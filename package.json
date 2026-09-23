@@ -63,13 +63,11 @@
     }
   },
   "scripts": {
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "lint": "eslint src --max-warnings=0",
-    "check": "npm run compile && npm run lint && npm test",
+    "check:syntax": "node scripts/check-syntax.js",
+    "check": "npm run check:syntax && npm test",
     "test": "node --test test/*.test.js",
-    "package": "python3 scripts/package.py",
-    "test:ui": "node test/ui.cjs"
+    "test:ui": "node test/ui.cjs",
+    "package": "python3 scripts/package.py"
   },
   "dependencies": {
     "yaml": "2.9.1"
