@@ -63,6 +63,10 @@
     }
   },
   "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --max-warnings=0",
+    "check": "npm run compile && npm run lint && npm test",
     "test": "node --test test/*.test.js",
     "package": "python3 scripts/package.py",
     "test:ui": "node test/ui.cjs"
